@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.amqp.core.CustomExchange;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +42,14 @@ public class ExchangeConfig {
 	
 	@Bean
 	public DirectExchange exchangeAck() {	
-		return ExchangeBuilder.directExchange(RabbitNameConfig.EX_ACK).autoDelete()
+		return ExchangeBuilder.directExchange(RabbitNameConfig.EX_ACK).autoDelete().alternate(RabbitNameConfig.EX_ALTERNATE)
+				.durable(false).build();
+	}
+	
+	//备份交换机alternate-ex
+	@Bean
+	public FanoutExchange alternateExchange() {	
+		return ExchangeBuilder.fanoutExchange(RabbitNameConfig.EX_ALTERNATE).autoDelete()
 				.durable(false).build();
 	}
 	

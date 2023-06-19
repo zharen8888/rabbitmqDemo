@@ -111,4 +111,36 @@ public class MockTestDelay {
 			e.printStackTrace();
 		}
     }
+    
+    
+    @Test
+    public void alterTest() {
+    	rabbitTemplate.setMandatory(true);
+    	//(@Nullable CorrelationData correlationData, boolean ack, @Nullable String cause
+    	rabbitTemplate.setConfirmCallback((correlationData,ack,cause)->{
+    		log.info("\n确认消息送到交换机(Exchange)结果：");
+            log.info("相关数据：" + correlationData);
+            log.info("是否成功：" + ack);
+            log.info("错误原因：" + cause);
+    	});
+    	
+    	rabbitTemplate.setReturnsCallback(returnedMessage -> {
+            log.info("\n确认消息送到队列(Queue)结果：");
+            log.info("发生消息：" + returnedMessage.getMessage());
+            log.info("回应码：" + returnedMessage.getReplyCode());
+            log.info("回应信息：" + returnedMessage.getReplyText());
+            log.info("交换机：" + returnedMessage.getExchange());
+            log.info("路由键：" + returnedMessage.getRoutingKey());
+        });
+    	
+    	rabbitTemplate.convertAndSend(RabbitNameConfig.EX_ACK,"rk-ack1", new Msg("zhangsan","18"));
+
+    	
+    	try {
+			Thread.currentThread().sleep(1000000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }

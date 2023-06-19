@@ -36,5 +36,10 @@ public class QueueConfig {
 				.build();
 	}
 	
+	@Bean
+	public Queue queueAlterBack() {	
+		return QueueBuilder.nonDurable(RabbitNameConfig.queueAlterBack).expires(1000*60*60)
+				.build();
+	}
 
 }

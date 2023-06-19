@@ -10,6 +10,8 @@ public class RabbitNameConfig {
 	
 	public static final String queueAck = "queueAck";
 	
+	public static final String queueAlterBack = "queueAlterBack";
+	
 	
     public static final String EX_NOMAL = "nomal";
 	
@@ -18,5 +20,7 @@ public class RabbitNameConfig {
 	public static final String EX_DELAY = "plugin-delay";
 	
 	public static final String EX_ACK = "EX-ACK";
+	
+	public static final String EX_ALTERNATE = "EX-ALTER";
 
 }

@@ -4,6 +4,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.CustomExchange;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,6 +45,12 @@ public class BindingConfig {
 	public Binding QueueAckBindingAck(@Qualifier("exchangeAck") DirectExchange exchange,
 			@Qualifier(RabbitNameConfig.queueAck) Queue queue) {	
 		return BindingBuilder.bind(queue).to(exchange).with("rk-ack");
+	}
+	
+	@Bean
+	public Binding QueueAlterBackBindingAlter(@Qualifier("alternateExchange") FanoutExchange exchange,
+			@Qualifier("queueAlterBack") Queue queue) {	
+		return BindingBuilder.bind(queue).to(exchange);
 	}
 	
 
